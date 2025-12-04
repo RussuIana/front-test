@@ -1,0 +1,5 @@
+export * from "./CategoryMovies.tsx"
+export * from "./Favorites.tsx"
+export * from "./FilteredMovies.tsx"
+export * from "./Main.tsx"
+export * from "./Search.tsx"
