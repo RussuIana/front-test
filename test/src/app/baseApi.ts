@@ -1,22 +1,14 @@
 import { createApi } from "@reduxjs/toolkit/query/react"
-import {baseQuery} from "@/app/baseQuery.ts";
+import { baseQuery } from "@/app/baseQuery.ts"
+
 
 export const baseApi = createApi({
-    reducerPath: "api",
-    tagTypes: ["Movielist", "Movie"],
-    baseQuery: async (args, api, extraOptions) => {
-        const result = await baseQuery(args, api, extraOptions)
+  reducerPath: "api",
+  tagTypes: ["PopularMovies","TopRatedMovies" ,"UpcomingMovies", "NowPlayingMovies","Movie"],
+   baseQuery,
 
-        // handleError(api, result)
 
-        return result
-    },
-    endpoints: () => ({}),
+    // handleError(api, result)
+
+  endpoints: () => ({}),
 })
-
-
-
-
-
-
-
