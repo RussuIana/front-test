@@ -3,7 +3,9 @@ import {MovieCategories} from "@/features/discoverMovies/ui/movieCategories/Movi
 export const Main = () => {
     return (
         <div>
-            <h1>Home page</h1>
+            <h1>Welcome <br/>
+                Browse highlighted titles from TMDB</h1>
+            <input type="text"/> <button>search</button>
             <MovieCategories/>
         </div>
     )

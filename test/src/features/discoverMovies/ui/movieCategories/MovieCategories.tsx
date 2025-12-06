@@ -1,10 +1,8 @@
-import {
-    useGetNowPlayingMoviesQuery,
+import {useGetNowPlayingMoviesQuery,
     useGetPopularMoviesQuery,
     useGetTopRatedMoviesQuery,
     useGetUpcomingMoviesQuery
 } from "@/features/discoverMovies/api/movieCategoriesApi.ts";
-
 export const MovieCategories =()=>{
     const {data:popular} = useGetPopularMoviesQuery()
     const {data: topRated} = useGetTopRatedMoviesQuery()
@@ -16,7 +14,6 @@ export const MovieCategories =()=>{
         { title: "Upcoming Movies", data: upcoming },
         { title: "Now Playing Movies", data: nowPlaying },
     ];
-
     return (
         <>
             {sections.map(section => (
