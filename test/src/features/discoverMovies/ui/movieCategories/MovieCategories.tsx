@@ -14,13 +14,13 @@ export const MovieCategories = () => {
     const { data: upcoming} = useGetUpcomingMoviesQuery();
     const { data: nowPlaying} = useGetNowPlayingMoviesQuery();
 
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
     const sections = [
-        { title: "Popular Movies", data: popular ,link: "popular" },
-        { title: "Top Rated Movies", data: topRated ,link: "top-rated" },
+        { title: "Popular Movies", data: popular ,link:"popular" },
+        { title: "Top Rated Movies", data: topRated ,link: "top_rated" },
         { title: "Upcoming Movies", data: upcoming, link: "upcoming"  },
-        { title: "Now Playing Movies", data: nowPlaying,link: "now-playing"  },
+        { title: "Now Playing Movies", data: nowPlaying,link: "now_playing"  },
     ];
 
     return (
@@ -29,13 +29,13 @@ export const MovieCategories = () => {
                         <section key={section.title}>
                             <h2>{section.title}</h2>
                             {(section.data ?? []).map((movie: DomainMovie) => (
-                                <div key={movie.id}>{movie.name ?? movie.name}</div>
+                                <div key={movie.id}>{movie.title ?? movie.original_title}</div>
                             ))}
                             {/* Button "View more" */}
                             <Button
                                 variant="contained"
                                 style={{ marginTop: "10px" }}
-                                onClick={() => navigate(`/categories?link=${section.link}`)}
+                                onClick={() => navigate(`/categoryMovies?query=${section.link}`)}
                             >
                                 View more
                             </Button>

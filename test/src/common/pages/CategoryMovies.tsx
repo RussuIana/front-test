@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import Button from "@mui/material/Button";
 import {
     useGetNowPlayingMoviesQuery,
@@ -6,9 +6,10 @@ import {
     useGetTopRatedMoviesQuery,
     useGetUpcomingMoviesQuery
 } from "@/features/discoverMovies/api/movieCategoriesApi";
-import type {DomainMovie, FilterMovie} from "@/features/discoverMovies/lib/types";
+import type {DomainMovie} from "@/features/discoverMovies/lib/types";
+import {useSearchParams} from "react-router-dom";
+
 export const CategoryMovies = () => {
-    const [selectedCategory, setSelectedCategory] = useState<FilterMovie | null>(null);
 
     // Загружаем данные для всех категорий (можно оптимизировать потом)
     const { data: popular } = useGetPopularMoviesQuery();
@@ -16,20 +17,28 @@ export const CategoryMovies = () => {
     const { data: upcoming } = useGetUpcomingMoviesQuery();
     const { data: nowPlaying } = useGetNowPlayingMoviesQuery();
 
-    const categoryData: Record<FilterMovie, DomainMovie[] | undefined> = {
-        "Popular movies": popular,
-        "Top rated movies": topRated,
-        "Upcoming movies": upcoming,
-        "Now playing movies": nowPlaying
+    const [searchParams] = useSearchParams();
+    const categoryQuery = searchParams.get("query");
+    const [selectedCategory, setSelectedCategory] = useState<string | null>(categoryQuery);
+
+    useEffect(() => {
+        if (categoryQuery) {
+            setSelectedCategory(categoryQuery);
+        }
+    }, [categoryQuery]);
+
+
+    const categoryData: Record<string, DomainMovie[] | undefined> = {
+        popular: popular,
+        top_rated: topRated,
+        upcoming: upcoming,
+        now_playing: nowPlaying
     };
-    const categories: FilterMovie[] = [
-        "Popular movies",
-        "Top rated movies",
-        "Upcoming movies",
-        "Now playing movies"
-    ];
 
     const movies = selectedCategory ? categoryData[selectedCategory]?? [] : [];
+
+    const categories=Object.keys(categoryData);
+
 
     return (
         <div>
@@ -49,7 +58,7 @@ export const CategoryMovies = () => {
             <div>
                 {movies.map(m => (
                     <div key={m.id} style={{ marginBottom: 8 }}>
-                        {m.name ?? m.name}
+                        {m.title ?? m.original_title}
                     </div>
                 ))}
             </div>
