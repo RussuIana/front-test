@@ -50,6 +50,7 @@ export const CategoryMovies = () => {
                     >
                         {categoryTitles[c]}
                     </Button>
+
                 ))}
             </div>
 
@@ -63,3 +64,7 @@ export const CategoryMovies = () => {
         </div>
     );
 };
+
+
+
+

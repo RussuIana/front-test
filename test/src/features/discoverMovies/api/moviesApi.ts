@@ -1,5 +1,5 @@
 import {baseApi} from "@/app/baseApi.ts";
-import type {GetMoviesResponse} from "@/features/discoverMovies/api/fullMovieData/schemas/moviesApi.types.ts";
+import type {GetMoviesResponse} from "@/features/discoverMovies/api/fullMovieData/schemas/moviesApi.schema.ts";
 import {PAGE_SIZE} from "@/common/constants";
 
 
@@ -18,3 +18,5 @@ export const moviesApi = baseApi.injectEndpoints({
 
     }),
 })
+
+export const {useGetMoviesQuery}= moviesApi;

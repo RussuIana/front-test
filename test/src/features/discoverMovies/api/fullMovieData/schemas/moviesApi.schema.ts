@@ -1,7 +1,7 @@
 import {z} from "zod/v4";
 
 
-export const domainMoviesSchema = z.object({
+export const  movieSchema = z.object({
 adult :z.boolean(),
     backdrop_path:z.string().nullable(),
     genre_ids:z.array(z.number()),
@@ -18,12 +18,12 @@ adult :z.boolean(),
     vote_count:z.number().int(),
 })
 
-export type DomainMovies = z.infer<typeof domainMoviesSchema>
+export type Movie = z.infer<typeof movieSchema>
 
 export const getMoviesResponseSchema = z.object({
     page: z.number(),
     total_pages: z.number(),
     total_results: z.number(),
-    results: z.array(domainMoviesSchema),
+    results: z.array(movieSchema),
 });
 export type GetMoviesResponse = z.infer<typeof getMoviesResponseSchema>

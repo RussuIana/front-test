@@ -31,8 +31,6 @@ export const MovieCategories = () => {
                             {(section.data ?? []).map((movie: DomainMovie) => (
                                 <div key={movie.id}>
                                     {movie.title ?? movie.original_title}
-                                    {/*style={{ marginTop: "8px", fontStyle: "italic" }}*/}
-                                    {/*{section.link.replace(/_/g, " ")}*/}
                                 </div>
                             ))}
 

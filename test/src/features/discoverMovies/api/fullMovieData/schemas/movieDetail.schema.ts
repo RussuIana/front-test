@@ -33,7 +33,7 @@ export const belongsToCollectionSchema = z.object({
 
 
 
-export const domainMovieDetailSchema = z.object({
+export const movieDetailSchema = z.object({
     adult : z.boolean(),
     backdrop_path:z.string().nullable(),
     belongs_to_collection: belongsToCollectionSchema,
@@ -50,8 +50,8 @@ export const domainMovieDetailSchema = z.object({
     production_companies:z.array(productionCompaniesSchema),
     production_countries:z.array(productionCountriesSchema),
     release_date:z.string().nullable(),
-    revenue:z.number().int(),
-    runtime:z.number().int(),
+    revenue:z.number().int().nullable(),
+    runtime:z.number().int().nullable(),
     spoken_languages:z.array(spokenLanguagesSchema),
     status:z.string().nullable(),
     tagline:z.string().nullable(),
@@ -62,5 +62,5 @@ export const domainMovieDetailSchema = z.object({
 
 })
 
-export type MovieDetail = z.infer<typeof domainMovieDetailSchema>
+export type MovieDetail = z.infer<typeof movieDetailSchema>
 

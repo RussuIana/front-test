@@ -1,4 +1,4 @@
-import type { MovieCategory } from "@/features/discoverMovies/api/fullMovieData/schemas/movieCategoriesApi.types.ts"
+import type { MovieCategory } from "@/features/discoverMovies/api/fullMovieData/schemas/movieCategoriesApi.schema.ts"
 
 export type DomainMovie = MovieCategory & {
   filter: FilterCategory
