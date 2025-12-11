@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import { useState} from "react";
 import Button from "@mui/material/Button";
 import {
     useGetNowPlayingMoviesQuery,
@@ -21,12 +21,6 @@ export const CategoryMovies = () => {
     const categoryQuery = searchParams.get("query");
     const [selectedCategory, setSelectedCategory] = useState<string | null>(categoryQuery);
 
-    useEffect(() => {
-        if (categoryQuery) {
-            setSelectedCategory(categoryQuery);
-        }
-    }, [categoryQuery]);
-
 
     const categoryData: Record<string, DomainMovie[] | undefined> = {
         popular: popular,
@@ -35,10 +29,14 @@ export const CategoryMovies = () => {
         now_playing: nowPlaying
     };
 
-    const movies = selectedCategory ? categoryData[selectedCategory]?? [] : [];
-
+    const categoryTitles: Record<string, string> = {
+        popular: "Popular Movies",
+        top_rated: "Top Rated Movies",
+        upcoming: "Upcoming Movies",
+        now_playing: "Now Playing Movies",
+    };
     const categories=Object.keys(categoryData);
-
+    const movies = selectedCategory ? categoryData[selectedCategory]?? [] : [];
 
     return (
         <div>
@@ -50,7 +48,7 @@ export const CategoryMovies = () => {
                         onClick={() => setSelectedCategory(c)}
                         sx={{ textTransform: "none" }}
                     >
-                        {c}
+                        {categoryTitles[c]}
                     </Button>
                 ))}
             </div>
@@ -58,7 +56,7 @@ export const CategoryMovies = () => {
             <div>
                 {movies.map(m => (
                     <div key={m.id} style={{ marginBottom: 8 }}>
-                        {m.title ?? m.original_title}
+                        {m.name}
                     </div>
                 ))}
             </div>

@@ -29,9 +29,15 @@ export const MovieCategories = () => {
                         <section key={section.title}>
                             <h2>{section.title}</h2>
                             {(section.data ?? []).map((movie: DomainMovie) => (
-                                <div key={movie.id}>{movie.title ?? movie.original_title}</div>
+                                <div key={movie.id}>
+                                    {movie.title ?? movie.original_title}
+                                    {/*style={{ marginTop: "8px", fontStyle: "italic" }}*/}
+                                    {/*{section.link.replace(/_/g, " ")}*/}
+                                </div>
                             ))}
+
                             {/* Button "View more" */}
+
                             <Button
                                 variant="contained"
                                 style={{ marginTop: "10px" }}

@@ -4,6 +4,6 @@ import type {CastMember} from "@/features/discoverMovies/api/fullMovieData/schem
 
 export type FullMovieData = {
     details: MovieDetail;
-    casts: CastMember;
+    casts: CastMember[];
     similar: SimilarMoviesResponse;
 };
