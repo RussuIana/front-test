@@ -1,0 +1,5 @@
+export * from "./castMember.schema"
+export * from "./movieCategoriesApi.schema"
+export * from "./movieDetail.schema"
+export * from "./moviesApi.schema"
+export * from "./similarMovie.schema"

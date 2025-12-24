@@ -11,4 +11,3 @@ export const castMemberSchema = z.object({
 
 export type CastMember = z.infer<typeof castMemberSchema>;
 
-export const castResponseSchema = z.array(castMemberSchema);

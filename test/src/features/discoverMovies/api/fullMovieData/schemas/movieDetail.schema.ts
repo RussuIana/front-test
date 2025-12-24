@@ -1,10 +1,5 @@
 import {z} from "zod/v4";
-
-
-export const genreSchema = z.object({
-    id: z.number(),
-    name: z.string(),
-})
+import {genreSchema} from "@/features/discoverMovies/api/fullMovieData/schemas/genre.schema.ts";
 
 export const productionCompaniesSchema = z.object({
     id: z.number(),

@@ -1,53 +1,44 @@
-import type { DomainMovies } from "@/features/discoverMovies/api/fullMovieData/schemas/moviesApi.schema.ts";
-import type { FilterCategory } from "@/features/discoverMovies/lib/types";
 import { useGetMoviesQuery } from "@/features/discoverMovies/api/moviesApi";
-import { MoviePopularity } from "@/common/enums/enums";
-import List from "@mui/material/List";
+import type {FilterCategory} from "@/features/discoverMovies/api/fullMovieData/types";
+import type {Movie} from "@/features/discoverMovies/api/fullMovieData/schemas";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import {MovieCard} from "@/features/discoverMovies/ui/movieCard/MovieCard.tsx";
+import Box from "@mui/material/Box";
+import LinearProgress from "@mui/material/LinearProgress";
 
-export type CategoryKey = "popular" | "top_rated" | "upcoming" | "now_playing";
 
 type Props = {
-    movieCategory: {
-        filter: FilterCategory;      // "Popular movies" | "Top rated movies" | "Upcoming movies" | "Now playing movies"
-        categoryKey: CategoryKey;     // ключ для запроса к API
-    }
-}
+    category: FilterCategory;
+};
 
-export const Movies = ({ movieCategory }: Props) => {
-    const { filter, categoryKey } = movieCategory;
+export const Movies = ({ category }: Props) => {
+
 
     // Запрос к API с правильной категорией
-    const { data } = useGetMoviesQuery({ category: categoryKey }, { refetchOnFocus: true });
+    const { data,isLoading,isError } = useGetMoviesQuery({ category}, { refetchOnFocus: true });
 
     // Массив фильмов из ответа API
-    let filteredMovies: DomainMovies[] | undefined = data?.results;
+    const movies: Movie[] = data?.results || [];
+    console.log(category, data);
 
-    // Фильтрация по популярности/типу
-    if (filter === "Popular movies") {
-        filteredMovies = filteredMovies?.filter(movie => movie.genre_ids.includes(MoviePopularity.Popular));
-    } else if (filter === "Top rated movies") {
-        filteredMovies = filteredMovies?.filter(movie => movie.genre_ids.includes(MoviePopularity.TopRated));
-    } else if (filter === "Upcoming movies") {
-        filteredMovies = filteredMovies?.filter(movie => movie.genre_ids.includes(MoviePopularity.Upcoming));
-    } else if (filter === "Now playing movies") {
-        filteredMovies = filteredMovies?.filter(movie => movie.genre_ids.includes(MoviePopularity.NowPlaying));
+    if (isLoading) {
+        return(
+            <Box sx={{ width: '100%' }}>
+                <LinearProgress />
+            </Box>
+        )
     }
+    if (isError) return <Typography>Ошибка при загрузке фильмов</Typography>;
+    if (!movies.length) return <Typography>Фильмов нет</Typography>;
 
     return (
-        <>
-            {filteredMovies?.length === 0 ? (
-                <p>Фильмов нет</p>
-            ) : (
-                <div>
-                    <List>
-                        {filteredMovies?.map(movie => (
-                            <div key={movie.id} style={{ marginBottom: 8 }}>
-                                {movie.title ?? movie.original_title}
-                            </div>
-                        ))}
-                    </List>
+        <Grid container spacing={2}>
+            {movies.slice(0, 6).map(movie => (
+                <div key={movie.id} >
+                    <MovieCard movie={movie} />
                 </div>
-            )}
-        </>
+            ))}
+        </Grid>
     )
 }

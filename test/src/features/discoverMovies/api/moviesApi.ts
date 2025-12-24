@@ -1,22 +1,54 @@
 import {baseApi} from "@/app/baseApi.ts";
 import type {GetMoviesResponse} from "@/features/discoverMovies/api/fullMovieData/schemas/moviesApi.schema.ts";
-import {PAGE_SIZE} from "@/common/constants";
+import type {FilterCategory} from "@/features/discoverMovies/api/fullMovieData/types";
 
 
 export const moviesApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
-        getMovies: build.query<GetMoviesResponse, {category: string; page?: number }>({
+        getMovies: build.query<GetMoviesResponse, {category:FilterCategory; page?: number }>({
             query: ({ category, page = 1 }) => {
                 return {
-                    url:  `movies/${category}`,
-                    params: {page, count: PAGE_SIZE},
+                    url: `movie/${category}`,
+                    params: {page},
                 }
             },
             providesTags: (_result, _error, { category}) => [{type: "Movie", id: category}],
-            // keepUnusedDataFor: 12,
         }),
 
-    }),
-})
+        getSearchMovies: build.query<
+            GetMoviesResponse,
+            { query: string; page?: number }
+        >({
+            query: ({ query, page = 1 }) => ({
+                url: "search/movie",
+                params: {
+                    query,
+                    page,
+                },
+            }),
+        }),
 
-export const {useGetMoviesQuery}= moviesApi;
+        getFilteredMovies: build.query<GetMoviesResponse, {
+            genres?: number[];
+            rating?: [number, number];
+            sortBy?: string;
+            page?: number;
+        }>({
+            query: ({ genres = [], rating = [0, 10], sortBy = "popularity.desc", page = 1 }) => ({
+                url: "discover/movie",
+                params: {
+                    with_genres: genres.join(","),
+                    "vote_average.gte": rating[0],
+                    "vote_average.lte": rating[1],
+                    sort_by: sortBy,
+                    page,
+                },
+            }),
+            providesTags: ["Movie"],
+        }),
+
+
+    }),
+    })
+
+export const {useGetMoviesQuery, useGetSearchMoviesQuery, useGetFilteredMoviesQuery}= moviesApi;
