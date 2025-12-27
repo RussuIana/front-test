@@ -5,6 +5,9 @@ import type {FilterCategory} from "@/features/discoverMovies/api/fullMovieData/t
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import {Movies} from "@/features/discoverMovies/ui/movieCategories/movies/Movies.tsx";
+import {useEffect, useState} from "react";
+import {MoviePagination} from "@/features/discoverMovies/ui/moviePagination/MoviePagination.tsx";
+import {useGetMoviesQuery} from "@/features/discoverMovies/api/moviesApi.ts";
 
 const categories: { title: string; value: FilterCategory }[] = [
     { title: "Popular", value: "popular" },
@@ -17,18 +20,23 @@ export const CategoryMovies = () => {
 
 
     const [searchParams, setSearchParams] = useSearchParams();
-
+    const [page, setPage] = useState(1);
     const activeCategory =
         (searchParams.get("query") as FilterCategory) || "popular";
 
-
+    // Сбрасываем страницу при смене категории
+    useEffect(() => {
+        setPage(1);
+    }, [activeCategory]);
 
     const handleCategoryClick = (category: FilterCategory) => {
         // Меняем query параметр в URL
         setSearchParams({ query: category });
     };
 
+    const { data, isLoading } = useGetMoviesQuery({ category: activeCategory, page });
 
+    if (isLoading) return null;
     return (
         <div style={{ padding: "24px" }}>
             {/* Кнопки выбора категории */}
@@ -50,9 +58,15 @@ export const CategoryMovies = () => {
             </Typography>
 
             {/* Список фильмов */}
-            <Movies category={activeCategory} />
+            <Movies category={activeCategory} page={page} limit={20}/>
 
             {/* Здесь можно добавить пагинацию или бесконечный скролл */}
+            <MoviePagination
+                totalCount={data?.total_pages ?? 1}  // сюда нужно передать реальное количество страниц из API
+                page={page}
+                setPage={setPage}
+            />
+
         </div>
     );
 };

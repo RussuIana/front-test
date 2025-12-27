@@ -20,7 +20,7 @@ export const MoviesSection = ({ title, category }: Props) => {
             </Typography>
 <div style={{ display: "flex" , justifyContent: "space-between" }}>
 
-    <Movies category={category} />
+    <Movies category={category} page={1} limit={6}/>
 
     <Stack mt={2}>
     <Button

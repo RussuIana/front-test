@@ -16,7 +16,7 @@ export const GlobalLoader = () => {
         let timeout: number;
 
         if (isFetchingGlobal) {
-            timeout = window.setTimeout(() => setVisible(true), 100);
+            timeout = window.setTimeout(() => setVisible(true), 200);
         } else {
             timeout = window.setTimeout(() => setVisible(false), 300);
         }

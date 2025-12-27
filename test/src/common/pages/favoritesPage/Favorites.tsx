@@ -15,6 +15,7 @@ export const Favorites = () => {
     useEffect(() => {
         const saved = JSON.parse(localStorage.getItem(FAVORITES_KEY) || "[]"
         )as Movie[];
+
         setFavorites(saved);
     }, []);
 
