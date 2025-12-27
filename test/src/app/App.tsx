@@ -6,9 +6,9 @@ import {selectThemeMode} from "@/app/app-slice.ts";
 import {getTheme} from "@/common/theme/theme.ts";
 import {ThemeProvider} from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import Toolbar from "@mui/material/Toolbar";
 import Box from "@mui/material/Box";
 import {ErrorSnackbar} from "@/common/components/errorSnackbar/ErrorSnackbar.tsx";
+import {GlobalLoader} from "@/features/discoverMovies/ui/globalLoader/GlobalLoader.tsx";
 
 
 export const App = () => {
@@ -23,7 +23,7 @@ export const App = () => {
             <CssBaseline />
             <Box display="flex" flexDirection="column" minHeight="100vh">
                 <Header/>
-                <Toolbar/>
+                <GlobalLoader/>
                 <Box component="main" flexGrow={1} px={2}>
                     <Routing />
                 </Box>

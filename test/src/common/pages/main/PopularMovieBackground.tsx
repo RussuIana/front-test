@@ -1,17 +1,17 @@
 import { SearchInput } from "@/common/components";
 import {useEffect,  useState} from "react";
 import {useGetMoviesQuery} from "@/features/discoverMovies/api/moviesApi.ts";
-import Box from "@mui/material/Box";
+import {MovieCardSkeleton} from "@/features/discoverMovies/ui/movieCardSkeleton/MovieCardSkeleton.tsx";
 import LinearProgress from "@mui/material/LinearProgress";
 
 const TMDB_IMAGE_BASE = "https://image.tmdb.org/t/p/original";
 export const PopularMovieBackground = () => {
 
-    const { data, isLoading } = useGetMoviesQuery({ category: "popular" });
-    console.log(data);
+    const { data, isLoading, isFetching } = useGetMoviesQuery({ category: "popular" });
+
     const [randomBackdrop, setRandomBackdrop] = useState<string | null>(null);
 
-
+    const showProgress = isLoading || isFetching;
 
     useEffect(() => {
         if (!data?.results?.length) return;
@@ -22,17 +22,10 @@ export const PopularMovieBackground = () => {
         const random =
             moviesWithBackdrop[Math.floor(Math.random() * moviesWithBackdrop.length)];
 
-        // if (random.backdrop_path !== randomBackdrop) {
+
             setRandomBackdrop(random.backdrop_path);
-        // }
+
     }, [data]);
-    if (isLoading) {
-        return(
-            <Box sx={{ width: '100%' }}>
-                <LinearProgress />
-            </Box>
-        )
-    }
     return (
         <section
             style={{
@@ -51,6 +44,12 @@ export const PopularMovieBackground = () => {
                 transition: "background-image 1s ease-in-out",
             }}
         >
+            {/* LinearProgress всегда */}
+            {showProgress && <LinearProgress sx={{ position: "absolute", top: 0, width: "100%" }} />}
+
+            {/* Skeleton пока данные загружаются */}
+            {showProgress && <MovieCardSkeleton count={3} />}
+
             <div
                 style={{
                     position: "absolute",

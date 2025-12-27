@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router"
 import { CategoryMovies, Favorites, FilteredMovies, Main, Search } from "../pages"
 import {MovieDetailsPage} from "@/common/pages/movieDetailsPage/MovieDetailsPage.tsx";
+import {PageNotFound} from "@/common/components/pageNotFound/FageNotFound.tsx";
 
 export const Path = {
   Main: "/",
@@ -9,7 +10,7 @@ export const Path = {
   Search: "search",
   Favorites: "favorites",
     MovieDetailsPage:"/movies/:id",
-  // NotFound: "*",
+  NotFound: "*",
 } as const
 
 export const Routing = () => (
@@ -32,5 +33,6 @@ export const Routing = () => (
       <Route>
       <Route path={Path.MovieDetailsPage} element={<MovieDetailsPage />} />
     </Route>
+      <Route path={Path.NotFound} element={<PageNotFound />} />
   </Routes>
 )

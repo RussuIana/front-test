@@ -3,26 +3,32 @@ import { useGetSimilarMoviesQuery} from "@/features/discoverMovies/api/movieDeta
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
+import {MovieCardSkeleton} from "@/features/discoverMovies/ui/movieCardSkeleton/MovieCardSkeleton.tsx";
 
 export const SimilarMovies = () => {
     const { id } = useParams<{ id: string }>();
     const movieId  = Number(id);
-    const { data,isLoading } = useGetSimilarMoviesQuery(movieId );
-    if (isLoading) {
-        return(
-            <Box sx={{ width: '100%' }}>
-                <LinearProgress />
-            </Box>
-        )
-    }
+    const { data,isLoading, isFetching } = useGetSimilarMoviesQuery(movieId );
 
+    const showProgress = isLoading || isFetching;
 
-    if (!data?.results || data.results.length === 0) {
-        return <Typography>No similar movies found</Typography>;
-    }
         return (
         <Box  >
-            <Typography variant="h4" gutterBottom>Similar Movies</Typography>
+            <Typography variant="h4" gutterBottom>
+                Similar Movies
+            </Typography>
+
+            {/* LinearProgress всегда */}
+            {showProgress && <LinearProgress sx={{ mb: 2 }} />}
+
+            {/* Skeleton при загрузке */}
+            {showProgress && <MovieCardSkeleton count={6} />}
+
+            {/* Нет данных */}
+            {!showProgress && (!data?.results || data.results.length === 0) && (
+                <Typography>No similar movies found</Typography>
+            )}
+            {!showProgress && data?.results && data.results.length > 0 && (
             <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
                 {data.results.slice(0, 6).map((movie) => (
                     <Box key={movie.id} sx={{ width: 100 }}>
@@ -35,6 +41,7 @@ export const SimilarMovies = () => {
                     </Box>
                 ))}
             </Box>
+                )}
         </Box>
     );
 };
