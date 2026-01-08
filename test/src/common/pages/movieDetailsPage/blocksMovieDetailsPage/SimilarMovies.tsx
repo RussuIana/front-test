@@ -2,46 +2,42 @@ import {useParams} from "react-router";
 import { useGetSimilarMoviesQuery} from "@/features/discoverMovies/api/movieDetailsApi.ts";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import LinearProgress from "@mui/material/LinearProgress";
-import {MovieCardSkeleton} from "@/features/discoverMovies/ui/movieCardSkeleton/MovieCardSkeleton.tsx";
-
+import {MovieCard} from "@/features/discoverMovies/ui/movieCard/MovieCard.tsx";
 export const SimilarMovies = () => {
     const { id } = useParams<{ id: string }>();
     const movieId  = Number(id);
-    const { data,isLoading, isFetching } = useGetSimilarMoviesQuery(movieId );
+    const { data} = useGetSimilarMoviesQuery(movieId, { skip: !movieId } );
 
-    const showProgress = isLoading || isFetching;
+// Если нет данных или пустой массив — показываем сообщение
+    if (!data?.results || data.results.length === 0) {
+        return <Typography>No similar movies found</Typography>;
+    }
 
         return (
-        <Box  >
+        <Box  sx={{ mt: 4 }}>
             <Typography variant="h4" gutterBottom>
                 Similar Movies
             </Typography>
 
-            {/* LinearProgress всегда */}
-            {showProgress && <LinearProgress sx={{ mb: 2 }} />}
 
-            {/* Skeleton при загрузке */}
-            {showProgress && <MovieCardSkeleton count={6} />}
-
-            {/* Нет данных */}
-            {!showProgress && (!data?.results || data.results.length === 0) && (
-                <Typography>No similar movies found</Typography>
-            )}
-            {!showProgress && data?.results && data.results.length > 0 && (
-            <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
+            <Box
+                sx={{
+                    display: "grid",
+                    gridTemplateColumns: {
+                        xs: "repeat(2, 1fr)",
+                        sm: "repeat(3, 1fr)",
+                        md: "repeat(6, 1fr)",
+                    },
+                    gap: 2,
+                    mt: 2,
+                }}
+            >
                 {data.results.slice(0, 6).map((movie) => (
-                    <Box key={movie.id} sx={{ width: 100 }}>
-                        <img
-                            src={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : "https://placehold.co/100x100?text=No+Image"}
-                            alt={movie.title}
-                            style={{ width: 100 }}
-                        />
-                        <Typography variant="body2">{movie.title}</Typography>
-                    </Box>
+                    <MovieCard key={movie.id} movie={movie} />
+
                 ))}
             </Box>
-                )}
+
         </Box>
     );
 };

@@ -1,4 +1,3 @@
-
 import {useGetFilteredMoviesQuery} from "@/features/discoverMovies/api/moviesApi.ts";
 import {MovieCard} from "@/features/discoverMovies/ui/movieCard/MovieCard.tsx";
 import Box from "@mui/material/Box";
@@ -12,10 +11,10 @@ type Props = {
     sortBy: string;
 };
 
-export const ResultsBlock = ({ genres, rating, sortBy }: Props) => {
+export const ResultsBlock = ({genres, rating, sortBy}: Props) => {
     const [page, setPage] = useState(1)
 
-    const { data, isLoading,isFetching } = useGetFilteredMoviesQuery({
+    const {data, isLoading, isFetching} = useGetFilteredMoviesQuery({
         genres,
         rating,
         sortBy,
@@ -31,11 +30,11 @@ export const ResultsBlock = ({ genres, rating, sortBy }: Props) => {
         <>
             <Box>
                 {/* Loading inițial → Skeleton */}
-                {isInitialLoading && <MovieCardSkeleton count={20} />}
+                {isInitialLoading && <MovieCardSkeleton count={20}/>}
 
 
                 {/* Скелетон при смене страницы / фильтров */}
-                {!isInitialLoading && isFetching && <MovieCardSkeleton count={20} />}
+                {!isInitialLoading && isFetching && <MovieCardSkeleton count={20}/>}
 
                 {/* Lista de filme */}
                 {hasResults && (
@@ -43,18 +42,19 @@ export const ResultsBlock = ({ genres, rating, sortBy }: Props) => {
                         sx={{
                             display: "grid",
                             gridTemplateColumns: "repeat(auto-fill, 200px)",
-                            gap: 2,
+                            gap: 4,
+                            justifyContent: "center",
                         }}
                     >
                         {data!.results.map((movie) => (
-                            <MovieCard key={movie.id} movie={movie} />
+                            <MovieCard key={movie.id} movie={movie}/>
                         ))}
                     </Box>
                 )}
             </Box>
             {(data?.total_pages ?? 0) > 1 && (
                 <MoviePagination
-                    totalCount={data!.total_pages}
+                    totalPages={data!.total_pages}
                     page={page}
                     setPage={setPage}
                 />

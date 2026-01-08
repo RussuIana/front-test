@@ -1,5 +1,6 @@
-import { Button } from "@mui/material";
+
 import {useGetGenresQuery} from "@/features/discoverMovies/api/moviesApi.ts";
+import {FilterByGenreButton} from "@/common/pages/filteredMoviesPage/filterByGenre/FilterByGenreButton.tsx";
 
 type Props = {
     value: number[];                // выбранные жанры (id)
@@ -20,15 +21,15 @@ export const FilterByGenre = ({ value, onChange }: Props) => {
     };
 
     return (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "12px" }}>
             {data.genres.map((genre) => (
-                <Button
+                <FilterByGenreButton
                     key={genre.id}
-                    variant={value.includes(genre.id) ? "contained" : "outlined"}
+                    className={value.includes(genre.id) ? "active" : ""}
                     onClick={() => toggleGenre(genre.id)}
                 >
                     {genre.name}
-                </Button>
+                </FilterByGenreButton>
             ))}
         </div>
     );

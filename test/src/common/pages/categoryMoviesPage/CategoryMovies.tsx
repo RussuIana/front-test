@@ -1,19 +1,19 @@
-
-import Button from "@mui/material/Button";
-import { useSearchParams} from "react-router-dom";
+import {useSearchParams} from "react-router-dom";
 import type {FilterCategory} from "@/features/discoverMovies/api/fullMovieData/types";
 import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
 import {Movies} from "@/features/discoverMovies/ui/movieCategories/movies/Movies.tsx";
 import {useEffect, useState} from "react";
 import {MoviePagination} from "@/features/discoverMovies/ui/moviePagination/MoviePagination.tsx";
 import {useGetMoviesQuery} from "@/features/discoverMovies/api/moviesApi.ts";
+import {Container} from "@/common/components/Container";
+import {CategoryButton} from "@/common/pages/categoryMoviesPage/categoryButton/CategoryButton.tsx";
+import {TitleSection} from "@/common/pages/main/titleSection/TitleSection.tsx";
 
 const categories: { title: string; value: FilterCategory }[] = [
-    { title: "Popular", value: "popular" },
-    { title: "Top Rated", value: "top_rated" },
-    { title: "Upcoming", value: "upcoming" },
-    { title: "Now Playing", value: "now_playing" },
+    {title: "Popular", value: "popular"},
+    {title: "Top Rated", value: "top_rated"},
+    {title: "Upcoming", value: "upcoming"},
+    {title: "Now Playing", value: "now_playing"},
 ];
 
 export const CategoryMovies = () => {
@@ -31,43 +31,48 @@ export const CategoryMovies = () => {
 
     const handleCategoryClick = (category: FilterCategory) => {
         // Меняем query параметр в URL
-        setSearchParams({ query: category });
+        setSearchParams({query: category});
     };
 
-    const { data, isLoading } = useGetMoviesQuery({ category: activeCategory, page });
+    const {data} = useGetMoviesQuery({category: activeCategory, page});
 
-    if (isLoading) return null;
     return (
-        <div style={{ padding: "24px" }}>
-            {/* Кнопки выбора категории */}
-            <Stack direction="row" spacing={2} mb={3}>
-                {categories.map((cat) => (
-                    <Button
-                        key={cat.value}
-                        variant={activeCategory === cat.value ? "contained" : "outlined"}
-                        onClick={() => handleCategoryClick(cat.value)}
-                    >
-                        {cat.title}
-                    </Button>
-                ))}
-            </Stack>
 
-            {/* Заголовок текущей категории */}
-            <Typography variant="h4" gutterBottom>
-                {categories.find(c => c.value === activeCategory)?.title} Movies
-            </Typography>
+        <Container>
+            <div style={{paddingTop: "40px"}}>
+                {/* Кнопки выбора категории */}
+                <Stack direction="row" spacing={2} mb={3} justifyContent="center" marginBottom="40">
+                    {categories.map((cat) => (
+                        <CategoryButton
+                            key={cat.value}
+                            className={activeCategory === cat.value ? "active" : undefined}
+                            onClick={() => handleCategoryClick(cat.value)}
+                        >
+                            {cat.title}
+                        </CategoryButton>
+                    ))}
+                </Stack>
 
-            {/* Список фильмов */}
-            <Movies category={activeCategory} page={page} limit={20}/>
+                {/* Заголовок текущей категории */}
 
-            {/* Здесь можно добавить пагинацию или бесконечный скролл */}
-            <MoviePagination
-                totalCount={data?.total_pages ?? 1}  // сюда нужно передать реальное количество страниц из API
-                page={page}
-                setPage={setPage}
-            />
+                <TitleSection>
+                    {categories.find(c => c.value === activeCategory)?.title} Movies
+                </TitleSection>
 
-        </div>
+                {/* Список фильмов */}
+                <Movies category={activeCategory} page={page} limit={20}/>
+
+
+                <MoviePagination
+                    totalPages={data?.total_pages ?? 1}  // сюда нужно передать реальное количество страниц из API
+                    page={page}
+                    setPage={setPage}
+                />
+            </div>
+
+        </Container>
+
+
     );
 };
 

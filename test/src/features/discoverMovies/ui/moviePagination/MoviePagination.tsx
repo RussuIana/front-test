@@ -1,16 +1,15 @@
-import { PAGE_SIZE } from "@/common/constants/constants"
+
 import Pagination from "@mui/material/Pagination"
 import type { ChangeEvent } from "react"
 import styles from "./MoviePagination.module.css"
-import Typography from "@mui/material/Typography"
 
 type Props = {
-    totalCount: number
+    totalPages: number
     page: number
     setPage: (page: number) => void
 }
 
-export const MoviePagination = ({ totalCount, page, setPage }: Props) => {
+export const MoviePagination = ({ totalPages, page, setPage }: Props) => {
     const changePage = (_: ChangeEvent<unknown>, page: number) => {
         setPage(page)
     }
@@ -18,16 +17,14 @@ export const MoviePagination = ({ totalCount, page, setPage }: Props) => {
     return (
         <>
             <Pagination
-                count={Math.ceil(totalCount / PAGE_SIZE)}
+                count={totalPages}
                 page={page}
                 onChange={changePage}
                 shape="rounded"
                 color="primary"
                 className={styles.pagination}
             />
-            <div className={styles.totalCount}>
-                <Typography variant="caption">Total: {totalCount}</Typography>
-            </div>
+
         </>
     )
 }

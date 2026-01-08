@@ -9,14 +9,4 @@ export const toolbarSx: SxProps = {
     gap:2,
     fontSize: "20px",
 
-
-    // "@media (max-width: 600px)": {
-    //     flexDirection: "column",
-    //     justifyContent: "center",
-    //     alignItems: "center",
-    //     minHeight: "auto",
-    //     gap: "8px",
-    //     padding: "10px 0",
-    // },
-
 }

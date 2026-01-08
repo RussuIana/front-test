@@ -1,60 +1,115 @@
-import { useParams } from "react-router";
-import {useGetMovieInfoQuery} from "@/features/discoverMovies/api/movieDetailsApi.ts";
+import {useParams} from "react-router-dom";
+import {useGetMovieInfoQuery} from "@/features/discoverMovies/api/movieDetailsApi";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import LinearProgress from "@mui/material/LinearProgress";
-import Skeleton from "@mui/material/Skeleton";
+import Chip from "@mui/material/Chip";
+import {BackButton} from "@/common/pages/movieDetailsPage/blocksMovieDetailsPage/backButton/BackButton";
+import {MoviesSkeleton} from "@/common/pages/movieDetailsPage/blocksMovieDetailsPage/movieSkeleton/MovieSkeleton.tsx";
+import {ratingColor} from "@/common/utils/reatingColor.ts";
+
 
 export const MovieInfo = () => {
-    const { id } = useParams<{ id: string }>();
+    const {id} = useParams<{ id: string }>();
     const movieId = Number(id);
-    const { data: movie,isLoading, isFetching } = useGetMovieInfoQuery(movieId);
 
-    const showProgress = isLoading || isFetching;
+    const {
+        data: movie,
+        isLoading,
+    } = useGetMovieInfoQuery(movieId, {skip: !movieId});
 
+    /* -------------------- LOADING -------------------- */
+    if (isLoading) {
+        return <MoviesSkeleton/>;
+    }
+
+    if (!movie) {
+        return <Typography>Movie not found</Typography>;
+    }
+
+    /* -------------------- HELPERS -------------------- */
+    const posterUrl = movie.poster_path
+        ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+        : "https://placehold.co/200x300?text=No+Image";
+
+    const releaseYear = movie.release_date?.slice(0, 4) ?? "N/A";
+
+    const runtime = movie.runtime
+        ? `${Math.floor(movie.runtime / 60)}h ${movie.runtime % 60}m`
+        : "N/A";
+
+    const rating = movie.vote_average
+        ? movie.vote_average.toFixed(1)
+        : "N/A";
+    /* -------------------- UI -------------------- */
     return (
-        <Box sx={{ mt: 2 }}>
-            {/* LinearProgress всегда */}
-            {showProgress && <LinearProgress sx={{ mb: 2 }} />}
-
-            <Box sx={{ display: "flex", gap: 2 }}>
-                {/* Постер */}
-                {showProgress ? (
-                    <Skeleton variant="rectangular" width={200} height={300} />
-                ) : (
-            <img
-                src={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : "https://placehold.co/200x300?text=No+Image"}
-                alt={movie.title}
-                style={{ width: 200 }}
+        <Box sx={{mt: 2, display: "flex", flexDirection: { xs: "column", sm: "row" }, gap: 2 }}>
+            {/* Poster */}
+            <Box
+                component="img"
+                  src={posterUrl}
+                  alt={movie.title}
+                  sx={{
+                      width: { xs: "100%", sm: 300 },
+                      height: { xs: "auto", sm: 450 },
+                      borderRadius: "10%",
+                      objectFit: "cover",
+                      flexShrink: 0,
+                  }}
             />
-                )}
 
-            {/* Информация о фильме */}
-            <Box sx={{ flex: 1 }}>
-                {showProgress ? (
-                    <>
-                        <Skeleton variant="text" width="60%" height={40} />
-                        <Skeleton variant="text" width="40%" height={30} sx={{ mt: 1 }} />
-                        <Skeleton variant="text" width="30%" height={30} sx={{ mt: 1 }} />
-                        <Skeleton variant="text" width="80%" height={20} sx={{ mt: 1 }} />
-                        <Skeleton variant="text" width="50%" height={20} sx={{ mt: 1 }} />
-                        <Skeleton variant="text" width="90%" height={60} sx={{ mt: 1 }} />
-                    </>
-                ) : movie ? (
-                    <>
-                <Typography variant="h4">{movie.title}</Typography>
-                <Typography variant="subtitle1">Release year:{movie.release_date?.slice(0, 4)}</Typography>
-                <Typography variant="body1">Rating: {movie.vote_average ? movie.vote_average.toFixed(1) : "N/A"}</Typography>
-                <Typography variant="body2">Genres: {movie.genres?.map(g => g.name).join(", ")}</Typography>
-                <Typography variant="body2">  Runtime: {movie.runtime ? `${Math.floor(movie.runtime / 60)}h ${movie.runtime % 60}m` : "N/A"}</Typography>
-                <Typography variant="body2">{movie.overview}</Typography>
-                    </>
-                ) : (
-                    <Typography>Movie not found</Typography>
-                )}
+                {/* Info */}
+                <Box sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
+                    <Box
+                        sx={{
+                            display: "flex", justifyContent: "space-between", alignItems: "center"
+                        }}
+                    >
+                        <Typography variant="h4">{movie.title}</Typography>
+                        <BackButton/>
+                    </Box>
+
+                    <Box
+                        sx={{
+                            display: "flex",
+                            gap: 2,
+                            alignItems: "center",
+                            mt: 1,
+                        }}
+                    >
+                        <Typography>Release year: {releaseYear}</Typography>
+
+                        <Chip
+                            label={rating}
+                            color={
+                                movie.vote_average
+                                    ? ratingColor(movie.vote_average)
+                                    : "default"
+                            }
+                            size="small"
+                        />
+
+                        <Typography>Runtime: {runtime}</Typography>
+                    </Box>
+
+                    <Typography variant="h6" sx={{mt: 2}}>
+                        {movie.overview}
+                    </Typography>
+
+
+                    <Typography variant="h4" sx={{mt: 2}}>
+                        Genres
+                    </Typography>
+                    <Box sx={{display: "flex", flexWrap: "wrap", gap: 1, mt: 1}}>
+                        {movie.genres.map((g) => (
+                            <Chip
+                                key={g.id}
+                                label={g.name}
+                                size="medium"
+                                color="primary"
+                            />
+                        ))}
+                    </Box>
                 </Box>
-        </Box>
-        </Box>
+            </Box>
     );
 };
-

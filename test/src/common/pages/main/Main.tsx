@@ -1,6 +1,7 @@
-
-import {PopularMovieBackground} from "@/common/pages/main/PopularMovieBackground.tsx";
+import {Container} from "@/common/components/Container";
+import {PopularMovieBackground} from "@/common/pages/main/ welcomeSection/PopularMovieBackground.tsx";
 import {MoviesSection} from "@/common/pages/main/movieSection/MovieSection.tsx";
+import Box from "@mui/material/Box";
 
 
 export const Main = () => {
@@ -8,28 +9,39 @@ export const Main = () => {
     return (
         <div>
             <PopularMovieBackground/>
+            <Container>
 
-            <div style={{ padding: 24 }}>
-                <MoviesSection
-                    title="Popular Movies"
-                    category="popular"
-                />
+                <Box my={6}>
+                    <MoviesSection
+                        title="Popular Movies"
+                        category="popular"
+                    />
+                </Box>
 
-                <MoviesSection
-                    title="Top Rated Movies"
-                    category="top_rated"
-                />
+                <Box my={6}>
+                    <MoviesSection
+                        title="Top Rated Movies"
+                        category="top_rated"
+                    />
+                </Box>
 
-                <MoviesSection
-                    title="Upcoming Movies"
-                    category="upcoming"
-                />
+                <Box my={6}>
+                    <MoviesSection
+                        title="Upcoming Movies"
+                        category="upcoming"
+                    />
+                </Box>
 
-                <MoviesSection
-                    title="Now Playing Movies"
-                    category="now_playing"
-                />
-            </div>
+                <Box my={6}>
+                    <MoviesSection
+                        title="Now Playing Movies"
+                        category="now_playing"
+                    />
+                </Box>
+
+            </Container>
+
+
         </div>
     )
 }

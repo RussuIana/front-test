@@ -26,5 +26,20 @@ export const GlobalLoader = () => {
 
     if (!visible) return null;
 
-    return <LinearProgress className={styles.loader} />;
+    return <LinearProgress role="progressbar"
+                           aria-busy="true" className={styles.loader}
+                           sx={{
+                               position: 'fixed',
+                               top: 0,
+                               left: 0,
+                               width: '100%',
+                               zIndex: 9999,
+                               height: 4,
+                               backgroundColor: theme => theme.palette.mode === 'dark'
+                                   ? 'rgba(255,255,255,0.1)'
+                                   : 'rgba(0,0,0,0.1)',
+                               '& .MuiLinearProgress-bar': {
+                                   backgroundColor: theme => theme.palette.info.main
+                               }
+                           }} />;
 };

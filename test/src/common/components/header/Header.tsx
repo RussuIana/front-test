@@ -8,7 +8,7 @@ import DarkModeIcon from "@mui/icons-material/DarkMode"
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import {iconButtonSx, navCenterSx, toolbarSx} from "@/common/styles";
-import {NavButton} from "@/common/components";
+import {Container, NavButton} from "@/common/components";
 import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
 
@@ -24,35 +24,58 @@ export const Header = () => {
     }
 
     return (
-        <AppBar position="sticky" sx={{mb: "30px"}}>
+
+        <AppBar
+            position="fixed"
+            sx={{
+                top: 0,
+                width: "100%",       // чтобы растягивался на всю ширину
+                zIndex: (theme) => theme.zIndex.drawer + 1, // поверх остальных элементов
+                backgroundColor: themeMode === "light" ? "#f6f5f5" : "#222", // optional: цвет фона под тему
+            }}>
             <Toolbar sx={toolbarSx}>
-                <Box sx={{width: 120, display: "flex"}}>
-                    <NavLink to="/">
-                        <img src={logo} alt="logo" style={{height: "30px"}}/>
-                    </NavLink>
-                </Box>
+                <Container>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                        }}
+                    >
+                        {/* LEFT */}
+                        <Box sx={{width: 120}}>
+                            <NavLink to="/">
+                                <img src={logo} alt="logo" style={{height: 30}}/>
+                            </NavLink>
+                        </Box>
 
-                <Box sx={navCenterSx}>
-                    <NavButton to="/" activeTheme={themeMode}>Main</NavButton>
-                    <Divider orientation="vertical"  sx={{height: "20px", mx: 1, width: "1px"}}/>
-                    <NavButton to="/categoryMovies" activeTheme={themeMode}>Category Movies</NavButton>
-                    <Divider orientation="vertical"  sx={{height: "20px", mx: 1, width: "1px"}}/>
-                    <NavButton to="/filteredMovies" activeTheme={themeMode}>Filtered Movies</NavButton>
-                    <Divider orientation="vertical"  sx={{height: "20px", mx: 1, width: "1px"}}/>
-                    <NavButton to="/search" activeTheme={themeMode}>Search</NavButton>
-                    <Divider orientation="vertical" sx={{height: "20px", mx: 1, width: "1px"}}/>
-                    <NavButton to="/favorites" activeTheme={themeMode}>Favorites</NavButton>
-                </Box>
+                        {/* CENTER */}
+                        <Box sx={navCenterSx}>
+                            <NavButton to="/" activeTheme={themeMode}>Main</NavButton>
+                            <Divider orientation="vertical" sx={{height: 20, mx: 1}}/>
+                            <NavButton to="/categoryMovies" activeTheme={themeMode}>Category Movies</NavButton>
+                            <Divider orientation="vertical" sx={{height: 20, mx: 1}}/>
+                            <NavButton to="/filteredMovies" activeTheme={themeMode}>Filtered Movies</NavButton>
+                            <Divider orientation="vertical" sx={{height: 20, mx: 1}}/>
+                            <NavButton to="/search" activeTheme={themeMode}>Search</NavButton>
+                            <Divider orientation="vertical" sx={{height: 20, mx: 1}}/>
+                            <NavButton to="/favorites" activeTheme={themeMode}>Favorites</NavButton>
+                        </Box>
 
-                <Box sx={{width: 120, display: "flex", justifyContent: "flex-end"}}>
-                    <IconButton onClick={changeMode}
-                                sx={iconButtonSx}>
-                        {themeMode === "light"
-                            ? <DarkModeIcon sx={{fontSize: 28, color: "#FFC300"}}/>
-                            : <LightModeIcon sx={{fontSize: 28, color: "#FFC300"}}/>}
-                    </IconButton>
-                </Box>
+                        {/* RIGHT */}
+                        <Box sx={{width: 120, display: "flex", justifyContent: "flex-end"}}>
+                            <IconButton onClick={changeMode} sx={iconButtonSx}>
+                                {themeMode === "light"
+                                    ? <DarkModeIcon sx={{fontSize: 28, color: "#FFC300"}}/>
+                                    : <LightModeIcon sx={{fontSize: 28, color: "#FFC300"}}/>
+                                }
+                            </IconButton>
+                        </Box>
+                    </Box>
+                </Container>
             </Toolbar>
         </AppBar>
+
+
     )
 }

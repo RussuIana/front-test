@@ -1,10 +1,11 @@
-import {styled} from "@mui/material/styles"
 import {NavLink} from "react-router-dom";
+import {styled} from "@mui/material/styles";
 
-export const NavButton = styled(NavLink,{
-    shouldForwardProp: (prop) =>prop !== "activeTheme",
-    })<{ activeTheme?: "light" | "dark" }>(({theme, activeTheme})=>({
+export const NavButton = styled(NavLink, {
+    shouldForwardProp: (prop) => prop !== "activeTheme",
+})<{ activeTheme?: "light" | "dark" }>(({theme, activeTheme}) => ({
         minWidth: "120px",
+        justifyContent: "center",
         display: "inline-flex",
         padding: "8px 20px",
         fontWeight: "bold",

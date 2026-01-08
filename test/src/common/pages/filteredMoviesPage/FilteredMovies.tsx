@@ -12,9 +12,25 @@ import {ResultsBlock} from "@/common/pages/filteredMoviesPage/resultsBlock/Resul
 import {useState} from "react";
 import {INITIAL_GENRES, INITIAL_RATING, INITIAL_SORT} from "@/common/constants";
 import type {MovieSortOption} from "@/common/pages/filteredMoviesPage/sortByForm/SortByForm.tsx";
+import {Container} from "@/common/components/Container";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import {useTheme} from "@mui/material/styles";
 
 
 export const FilteredMovies = () => {
+    const theme = useTheme();
+    const textColor =
+        theme.palette.mode === "light"
+            ? theme.palette.secondary.contrastText
+            : theme.palette.primary.contrastText;
+
+    const backGroundColor =
+        theme.palette.mode === "light"
+            ? theme.palette.secondary.main
+            : theme.palette.primary.main;
+
+
     const [sortBy, setSortBy] = useState<MovieSortOption>("popularity.desc");
     const [genres, setGenres] = useState<number[]>(INITIAL_GENRES);
     const [rating, setRating] = useState<[number, number]>(INITIAL_RATING);
@@ -26,25 +42,58 @@ export const FilteredMovies = () => {
     };
 
     return (
-        <div style={{ display: "flex", }}>
-            <div style={{ width: "20%" ,background:"gray", padding: "20px",gap:"5px" }}>
-                <h1>Filters / Sort</h1>
-                <SortBy value={sortBy} onChange={setSortBy} />
+        <Container>
+            <div style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                paddingTop: "40px",
+                gap: "32px", // расстояние между колонками
+                flexWrap: "wrap", // на мобильных переносим в 1 колонку
 
-                <FilterByRating value={rating} onChange={setRating} />
+            }}>
+                <aside style={{
+                    flex: "0 0 350px",
+                    minWidth: "300px",
+                    padding: "20px",
+                    borderRadius: "8px",
+                    height: "fit-content",
+                    position: "sticky",
+                    top: "80px",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "16px",
+                    backgroundColor:backGroundColor
+                }}>
+                    <Box
+                        sx={{color: textColor}}>
+                        <Typography variant="h4">
+                            Filters / Sort
+                        </Typography>
+                    </Box>
 
-                <FilterByGenre value={genres} onChange={setGenres} />
+                    <SortBy value={sortBy} onChange={setSortBy}/>
 
-                <ResetFiltersButton onReset={handleResetFilters}/>
+                    <FilterByRating value={rating} onChange={setRating}/>
+
+                    <FilterByGenre value={genres} onChange={setGenres}/>
+
+                    <ResetFiltersButton onReset={handleResetFilters}/>
+                </aside>
+
+                <div style={{flex: "1 1 0", minWidth: 0}}>
+                    <ResultsBlock
+                        sortBy={sortBy}
+                        genres={genres}
+                        rating={rating}
+                    />
+                </div>
+
             </div>
-            <div>
-                <ResultsBlock
-                    sortBy={sortBy}
-                    genres={genres}
-                    rating={rating}
-                />
-            </div>
-        </div>
+
+
+        </Container>
+
 
     )
 }

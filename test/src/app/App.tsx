@@ -20,13 +20,16 @@ export const App = () => {
 
     return (
         <ThemeProvider theme={theme}>
-            <CssBaseline />
+            <CssBaseline/>
+
             <Box display="flex" flexDirection="column" minHeight="100vh">
                 <Header/>
                 <GlobalLoader/>
-                <Box component="main" flexGrow={1} px={2}>
-                    <Routing />
+
+                <Box component="main" flexGrow={1} sx={{ pt: "64px" }}>
+                    <Routing/>
                 </Box>
+
                 <ErrorSnackbar/>
                 <Footer/>
 

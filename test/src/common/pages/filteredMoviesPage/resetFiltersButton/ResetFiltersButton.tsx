@@ -1,4 +1,5 @@
-import Button from "@mui/material/Button";
+
+import {ButtonFilterReset} from "@/common/pages/filteredMoviesPage/resetFiltersButton/ButtonFilterReset.tsx";
 
 
 type Props = {
@@ -7,13 +8,11 @@ type Props = {
 
 export const ResetFiltersButton = ({ onReset }: Props) => {
     return (
-        <Button
-            variant="outlined"
-            color="secondary"
+        <ButtonFilterReset
             onClick={onReset}
             sx={{ mt: 2 }}
         >
             Reset filters
-        </Button>
+        </ButtonFilterReset>
     );
 };
