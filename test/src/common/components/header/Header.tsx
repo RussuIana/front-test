@@ -22,7 +22,7 @@ export const Header = () => {
     }
 
     return (
-        <AppBar position="fixed" sx={appBarSx}>
+        <AppBar position="fixed" sx={appBarSx} elevation={0}>
             <Toolbar sx={toolbarSx}>
                 <Container>
                     <Box

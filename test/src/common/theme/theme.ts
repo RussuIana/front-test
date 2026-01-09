@@ -10,7 +10,7 @@ export const getTheme = (themeMode: ThemeMode) => {
 
             primary: {
                 main:  "#141C2C",
-                dark:  "#0F172A",
+                dark:  "#0f172a",
                 light:"#3C8A78",
             },
 
