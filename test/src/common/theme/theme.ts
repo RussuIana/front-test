@@ -1,42 +1,62 @@
-import {createTheme} from "@mui/material/styles"
-import type {ThemeMode} from "@/app/app-slice.ts";
-
+import type { ThemeMode } from "@/app/app-slice";
+import { createTheme } from "@mui/material";
 
 export const getTheme = (themeMode: ThemeMode) => {
+    const isLight = themeMode === "light";
+
     return createTheme({
         palette: {
             mode: themeMode,
 
             primary: {
-                main: "rgba(113,106,106,0.5)",
-                dark: '#128585',
-                contrastText: '#385477'
+                main:  "#141C2C",
+                dark:  "#0F172A",
+                light:"#3C8A78",
             },
 
             secondary: {
-                main: "#f6f5f5",
-                light: 'rgba(113,106,106,0.5)',
-                dark: '#561be4',
-                contrastText: 'rgb(62,62,62)'
+                main:  "#E0E7EF" ,
+                dark:  "#2C3E5E" ,
+                light:  "#6691b8" ,
             },
 
-            // например, для GlobalLoader
-            info: {
-                main: "#385477"
+            background: {
+                default: isLight ? "#F9FAFB" : "#0B1120",
+                paper: isLight ? "#FFFFFF" : "#182130",
             },
 
-            /* 🔥 ЦВЕТА ДЛЯ АКТИВНЫХ ЭЛЕМЕНТОВ */
+            text: {
+                primary: isLight ? "#1F2933" : "#E5E7EB",
+                secondary: isLight ? "#4B5563" : "#9CA3AF",
+                disabled: "#6B7280",
+            },
+
             action: {
-                selected:
-                    themeMode === "light"
-                        ? "#561be4"
-                        : "#128585",
+                hover: isLight
+                    ? "#6691b8"
+                    : "#3C8A78",
+                selected: isLight
+                    ? "rgba(56,84,119,0.28)"
+                    : "rgba(43,107,92,0.55)",
+            },
 
-                selectedOpacity: 1,
+            info: {
+                main: isLight ? "#385477" : "#3C8DBC",
+            },
+
+            success: { main: "#22C55E" },
+            warning: { main: "#FACC15" },
+            error: { main: "#EF4444" },
+        },
+
+        breakpoints: {
+            values: {
+                xs: 0,
+                sm: 576,
+                md: 768,
+                lg: 1200,
+                xl: 1536,
             },
         },
-        breakpoints: {  // корректный способ задать медиа-запросы
-            values: {xs: 0, sm: 576, md: 768, lg: 1200, xl: 1536}
-        }
-    })
-}
+    });
+};

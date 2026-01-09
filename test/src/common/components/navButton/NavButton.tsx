@@ -1,44 +1,29 @@
-import {NavLink} from "react-router-dom";
 import {styled} from "@mui/material/styles";
+import {NavLink} from "react-router";
 
-export const NavButton = styled(NavLink, {
-    shouldForwardProp: (prop) => prop !== "activeTheme",
-})<{ activeTheme?: "light" | "dark" }>(({theme, activeTheme}) => ({
-        minWidth: "120px",
-        justifyContent: "center",
-        display: "inline-flex",
-        padding: "8px 20px",
-        fontWeight: "bold",
-        textTransform: "capitalize",
-        textDecoration: "none",
-        transition: "all 0.25s ease",
+export const NavButton = styled(NavLink)(({ theme }) => ({
+    minWidth: "120px",
+    display: "inline-flex",
+    justifyContent: "center",
+    padding: "8px 20px",
+    fontWeight: "bold",
+    textDecoration: "none",
+    transition: "all 0.25s ease",
+    color: theme.palette.text.primary,
 
-        ...(activeTheme === "light" && {
-            color: theme.palette.secondary.contrastText,
-            "&:hover": {
-                color: theme.palette.secondary.dark
-            },
-        }),
+    "&:hover": {
+        color: theme.palette.mode === "light"
+            ? theme.palette.secondary.light   // light mode
+            : theme.palette.primary.light, // dark mode
+    },
 
-        ...(activeTheme === "dark" && {
-            color: theme.palette.primary.contrastText,
-            "&:hover": {
-                color: theme.palette.primary.dark
-            },
-        }),
-
-        // Активная кнопка
-        "&.active": {
-            borderRadius: "40px",
-            ...(activeTheme === "light" && {
-                boxShadow: `0 0 10px ${theme.palette.secondary.light}`,
-                borderColor: theme.palette.secondary.light,
-            }),
-
-            ...(activeTheme === "dark" && {
-                boxShadow: `0 0 10px ${theme.palette.primary.dark}`,
-                borderColor: theme.palette.primary.dark,
-            })
-        }
-    })
-)
+    "&.active": {
+        borderRadius: "40px",
+        border: `1px solid ${theme.palette.mode === "light"
+            ? theme.palette.secondary.light
+            : theme.palette.primary.light}`,
+        boxShadow: `0 0 8px ${theme.palette.mode === "light"
+            ? theme.palette.secondary.light
+            : theme.palette.primary.light}`,
+    },
+}));

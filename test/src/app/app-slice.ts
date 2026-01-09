@@ -1,14 +1,21 @@
 import {createSlice} from "@reduxjs/toolkit";
 import type {RequestStatus} from "@/common/types/types.ts";
 
+interface AppState {
+    themeMode: ThemeMode;
+    status: RequestStatus;
+    error: string | null;
+}
+
+const initialState: AppState = {
+    themeMode: (localStorage.getItem("theme") as ThemeMode) || "dark",
+    status: "idle",
+    error: null,
+};
 export const appSlice = createSlice({
     name: "app",
-    initialState: {
-        //Читаем тему из localStorage, если есть
-        themeMode: (localStorage.getItem("theme") as ThemeMode) || "dark",
-        status: "idle" as RequestStatus,
-        error: null as string | null,
-    },
+    initialState,
+
     selectors: {
         selectThemeMode: (state) => state.themeMode,
         selectAppError: (state) => state.error,
