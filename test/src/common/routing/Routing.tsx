@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router"
 import { CategoryMovies, Favorites, FilteredMovies, Main, Search } from "../pages"
 import {MovieDetailsPage} from "@/common/pages/movieDetailsPage/MovieDetailsPage.tsx";
-import {PageNotFound} from "@/common/components/pageNotFound/FageNotFound.tsx";
+import {PageNotFound} from "@/common/components/pageNotFound/PageNotFound.tsx";
 
 export const Path = {
   Main: "/",

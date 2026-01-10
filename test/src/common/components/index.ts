@@ -1,5 +1,6 @@
 export { Header } from "./header/Header"
 export { Footer } from "./footer/Footer"
 export { NavButton } from "./navButton/NavButton.tsx"
-export { SearchInput } from "@/common/pages/main/searchInput/SearchInput.tsx"
+export { PageNotFound } from "./pageNotFound/PageNotFound.tsx"
+export { ErrorSnackbar } from "./errorSnackbar/ErrorSnackbar.tsx"
 export {Container} from "./Container.tsx"

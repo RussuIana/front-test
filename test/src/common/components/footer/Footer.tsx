@@ -1,6 +1,7 @@
 
 import Box from "@mui/material/Box";
-import {footerSx} from "@/common/styles/footerSxStyles/footerSx.styles.ts";
+import {footerSx} from "@/common/styles";
+
 
 export const Footer = () => {
 
