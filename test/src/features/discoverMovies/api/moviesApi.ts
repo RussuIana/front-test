@@ -4,21 +4,21 @@ import type {FilterCategory} from "@/features/discoverMovies/api/fullMovieData/t
 
 export const moviesApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
-        getMovies: build.query<GetMoviesResponse, {category:FilterCategory; page?: number }>({
-            query: ({ category, page = 1 }) => {
+        getMovies: build.query<GetMoviesResponse, { category: FilterCategory; page?: number }>({
+            query: ({category, page = 1}) => {
                 return {
                     url: `movie/${category}`,
                     params: {page},
                 }
             },
-            providesTags: (_result, _error, { category}) => [{type: "Movie", id: category}],
+            providesTags: (_result, _error, {category}) => [{type: "Movie", id: category}],
         }),
 
         getSearchMovies: build.query<
             GetMoviesResponse,
             { query: string; page?: number }
         >({
-            query: ({ query, page = 1 }) => ({
+            query: ({query, page = 1}) => ({
                 url: "search/movie",
                 params: {
                     query,
@@ -26,7 +26,6 @@ export const moviesApi = baseApi.injectEndpoints({
                 },
             }),
         }),
-
 
         getFilteredMovies: build.query<GetMoviesResponse, {
             genres?: number[];
@@ -38,11 +37,12 @@ export const moviesApi = baseApi.injectEndpoints({
                         genres = [],
                         rating = [0, 10],
                         sortBy = "popularity.desc",
-                        page = 1 }
+                        page = 1
+                    }
             ) => ({
                 url: "discover/movie",
                 params: {
-                    ...(genres.length && { with_genres: genres.join(",") }),
+                    ...(genres.length && {with_genres: genres.join(",")}),
                     "vote_average.gte": rating[0],
                     "vote_average.lte": rating[1],
                     sort_by: sortBy,
@@ -53,10 +53,10 @@ export const moviesApi = baseApi.injectEndpoints({
         }),
 
         getGenres: build.query<{ genres: { id: number; name: string }[] }, void>({
-            query: () => ({ url: "genre/movie/list" }),
+            query: () => ({url: "genre/movie/list"}),
         }),
 
     }),
-    })
+})
 
-export const {useGetMoviesQuery, useGetSearchMoviesQuery, useGetFilteredMoviesQuery, useGetGenresQuery}= moviesApi;
+export const {useGetMoviesQuery, useGetSearchMoviesQuery, useGetFilteredMoviesQuery, useGetGenresQuery} = moviesApi;

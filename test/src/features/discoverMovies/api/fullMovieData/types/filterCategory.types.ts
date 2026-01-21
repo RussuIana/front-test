@@ -1,5 +1,4 @@
 
-
 export type FilterCategory =
     | "popular"
     | "top_rated"

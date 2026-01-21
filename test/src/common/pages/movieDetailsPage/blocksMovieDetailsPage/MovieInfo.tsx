@@ -74,7 +74,6 @@ export const MovieInfo = () => {
                         {movie.overview}
                     </Typography>
 
-
                     <Typography variant="h4"  sx={genreTitleSx}>
                         Genres
                     </Typography>

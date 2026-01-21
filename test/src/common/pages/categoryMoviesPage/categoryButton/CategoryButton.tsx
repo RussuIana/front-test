@@ -14,6 +14,7 @@ export const CategoryButton = styled(Button)(({theme}) => {
         padding: "6px 30px",
         fontWeight: "bold",
         textDecoration: "none",
+        textTransform: "none",
         transition: "all 0.25s ease",
         color: theme.palette.text.primary,
         backgroundColor: theme.palette.background.paper,

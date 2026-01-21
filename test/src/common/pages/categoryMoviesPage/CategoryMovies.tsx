@@ -8,6 +8,7 @@ import {useGetMoviesQuery} from "@/features/discoverMovies/api/moviesApi.ts";
 import {Container} from "@/common/components/Container";
 import {CategoryButton} from "@/common/pages/categoryMoviesPage/categoryButton/CategoryButton.tsx";
 import {TitleSection} from "@/common/pages/main/titleSection/TitleSection.tsx";
+import {capitalizeWords} from "@/common/utils";
 
 const categories: { title: string; value: FilterCategory }[] = [
     {title: "Popular", value: "popular"},
@@ -43,12 +44,12 @@ export const CategoryMovies = () => {
                             className={activeCategory === cat.value ? "active" : undefined}
                             onClick={() => handleCategoryClick(cat.value)}
                         >
-                            {cat.title}
+                            {capitalizeWords(cat.title)} Movies
                         </CategoryButton>
                     ))}
                 </Stack>
                 <TitleSection>
-                    {categories.find(c => c.value === activeCategory)?.title} Movies
+                    {capitalizeWords(categories.find(c => c.value === activeCategory)?.title?? "")} Movies
                 </TitleSection>
                 <Movies category={activeCategory} page={page} limit={20}/>
                 <MoviePagination

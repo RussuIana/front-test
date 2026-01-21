@@ -1,8 +1,6 @@
 import {baseApi} from "@/app/baseApi.ts";
 import type {CastMember, MovieDetail, SimilarMoviesResponse} from "@/features/discoverMovies/api/fullMovieData/schemas";
 
-
-
 export const MovieDetailsApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
         getMovieInfo: build.query<MovieDetail,  number >({

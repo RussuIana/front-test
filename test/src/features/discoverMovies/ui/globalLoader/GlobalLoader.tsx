@@ -1,8 +1,8 @@
 import LinearProgress from "@mui/material/LinearProgress";
-import styles from "./GlobalLoader.module.css";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/app/store.ts";
 import { useEffect, useState } from "react";
+import {globalLoaderSx} from "@/common/styles";
 
 export const GlobalLoader = () => {
     const isFetchingGlobal = useSelector((state: RootState) =>
@@ -27,19 +27,6 @@ export const GlobalLoader = () => {
     if (!visible) return null;
 
     return <LinearProgress role="progressbar"
-                           aria-busy="true" className={styles.loader}
-                           sx={{
-                               position: 'fixed',
-                               top: 0,
-                               left: 0,
-                               width: '100%',
-                               zIndex: 9999,
-                               height: 4,
-                               backgroundColor: theme => theme.palette.mode === 'dark'
-                                   ? 'rgba(255,255,255,0.1)'
-                                   : 'rgba(0,0,0,0.1)',
-                               '& .MuiLinearProgress-bar': {
-                                   backgroundColor: theme => theme.palette.info.main
-                               }
-                           }} />;
+                           aria-busy="true"
+                           sx={globalLoaderSx} />;
 };

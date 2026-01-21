@@ -13,7 +13,6 @@ export const MoviePagination = ({ totalPages, page, setPage }: Props) => {
     const changePage = (_: ChangeEvent<unknown>, page: number) => {
         setPage(page)
     }
-
     return (
         <>
             <Pagination
@@ -24,7 +23,6 @@ export const MoviePagination = ({ totalPages, page, setPage }: Props) => {
                 color="primary"
                 className={styles.pagination}
             />
-
         </>
     )
 }
