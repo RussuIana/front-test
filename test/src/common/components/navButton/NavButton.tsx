@@ -9,6 +9,7 @@ export const NavButton = styled(NavLink)(({ theme }) => ({
     fontWeight: "bold",
     textDecoration: "none",
     transition: "all 0.25s ease",
+
     color: theme.palette.text.primary,
 
     "&:hover": {

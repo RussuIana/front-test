@@ -14,7 +14,6 @@ export const MoviesSection = ({title, category}: Props) => {
 
     return (
         <Box width="100%">
-            {/* Заголовок + кнопка View More */}
             <Box
                 display="flex"
                 justifyContent="space-between"
@@ -22,15 +21,11 @@ export const MoviesSection = ({title, category}: Props) => {
                 mb={2}
             >
                 <TitleSection>{title}</TitleSection>
-
                 <ViewMoreButton to={`/categoryMovies?query=${category}`}>
                     View More
                 </ViewMoreButton>
             </Box>
-
-            {/* Сетка фильмов */}
             <Grid container spacing={3}>
-                {/* Массив карточек фильмов */}
                 <Movies category={category} page={1} limit={6}/>
             </Grid>
         </Box>

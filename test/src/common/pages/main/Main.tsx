@@ -3,14 +3,12 @@ import {PopularMovieBackground} from "@/common/pages/main/ welcomeSection/Popula
 import {MoviesSection} from "@/common/pages/main/movieSection/MovieSection.tsx";
 import Box from "@mui/material/Box";
 
-
 export const Main = () => {
 
     return (
         <div>
             <PopularMovieBackground/>
             <Container>
-
                 <Box my={6}>
                     <MoviesSection
                         title="Popular Movies"
@@ -38,10 +36,7 @@ export const Main = () => {
                         category="now_playing"
                     />
                 </Box>
-
             </Container>
-
-
         </div>
     )
 }

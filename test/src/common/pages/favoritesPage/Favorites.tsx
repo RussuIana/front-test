@@ -1,5 +1,5 @@
 import {useEffect, useState, useCallback} from "react";
-import {MovieCard} from "@/features/discoverMovies/ui/movieCard/MovieCard.tsx";
+import {MovieCardComponent} from "@/features/discoverMovies/ui/movieCardComponent/MovieCardComponent.tsx";
 import type {Movie} from "@/features/discoverMovies/api/fullMovieData/schemas";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -11,10 +11,8 @@ const FAVORITES_KEY = "favorites";
 
 export const Favorites = () => {
     const [favorites, setFavorites] = useState<Movie[]>([]);
-
     const [page, setPage] = useState(1);
 
-    // Загружаем из localStorage при монтировании
     useEffect(() => {
         const saved = JSON.parse(localStorage.getItem(FAVORITES_KEY) || "[]"
         ) as Movie[];
@@ -22,29 +20,25 @@ export const Favorites = () => {
         setFavorites(saved);
     }, []);
 
-    // Функция для обновления списка при добавлении/удалении
     const handleFavoritesChange = useCallback((updated: Movie[]) => {
         setFavorites(updated);
         localStorage.setItem(FAVORITES_KEY, JSON.stringify(updated));
     }, []);
 
-    // Пагинация
     const totalPages = Math.ceil(favorites.length / PAGE_SIZE);
     const currentMovies = favorites.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
     return (
         <Box style={{paddingTop: "40px"}}>
             <Container>
-
-                {/* Заголовок */}
-                <Typography variant="h4" component="h1" gutterBottom>
+                <Typography variant="h4" color="text.primary">
                     Favorites
                 </Typography>
 
-                {favorites.length === 0 ? (
-                    <Typography variant="h6" sx={{mt: 4}}>
+                {favorites.length === 0
+                    ? (<Typography variant="h6" sx={{mt: 4}} color="text.secondary">
                         Add movies to favorites to see them on this page.
-                    </Typography>
-                ) : (
+                    </Typography>)
+                 : (
                     <>
                         <Box
                             sx={{
@@ -54,10 +48,10 @@ export const Favorites = () => {
                             }}
                         >
                             {currentMovies.map(movie => (
-                                <MovieCard
+                                <MovieCardComponent
                                     key={movie.id}
                                     movie={movie}
-                                    onFavoritesChange={handleFavoritesChange} // передаем коллбек
+                                    onFavoritesChange={handleFavoritesChange}
                                 />
 
                             ))}
@@ -71,14 +65,10 @@ export const Favorites = () => {
                                     setPage={setPage}
                                 />
                             </Box>
-
                         )}
                     </>
                 )}
-
             </Container>
-
         </Box>
-
     );
 };

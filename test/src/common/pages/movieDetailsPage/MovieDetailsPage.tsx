@@ -8,7 +8,7 @@ export const MovieDetailsPage = () => {
 
     return (
         <Container>
-            <Box sx={{ p: 3 }}>
+            <Box sx={{ p: 5, display: "flex", flexDirection: "column", gap: 10}}>
                 <MovieInfo/>
                 <ActorsList/>
                 <SimilarMovies/>

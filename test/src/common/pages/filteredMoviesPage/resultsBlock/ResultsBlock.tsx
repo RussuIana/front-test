@@ -1,9 +1,10 @@
 import {useGetFilteredMoviesQuery} from "@/features/discoverMovies/api/moviesApi.ts";
-import {MovieCard} from "@/features/discoverMovies/ui/movieCard/MovieCard.tsx";
+import {MovieCardComponent} from "@/features/discoverMovies/ui/movieCardComponent/MovieCardComponent.tsx";
 import Box from "@mui/material/Box";
 import {MovieCardSkeleton} from "@/features/discoverMovies/ui/movieCardSkeleton/MovieCardSkeleton.tsx";
 import {useEffect, useState} from "react";
 import {MoviePagination} from "@/features/discoverMovies/ui/moviePagination/MoviePagination.tsx";
+import {resultsBlockSx} from "@/common/styles";
 
 type Props = {
     genres: number[];
@@ -29,25 +30,14 @@ export const ResultsBlock = ({genres, rating, sortBy}: Props) => {
     return (
         <>
             <Box>
-                {/* Loading inițial → Skeleton */}
                 {isInitialLoading && <MovieCardSkeleton count={20}/>}
-
-
-                {/* Скелетон при смене страницы / фильтров */}
                 {!isInitialLoading && isFetching && <MovieCardSkeleton count={20}/>}
-
-                {/* Lista de filme */}
                 {hasResults && (
                     <Box
-                        sx={{
-                            display: "grid",
-                            gridTemplateColumns: "repeat(auto-fill, 200px)",
-                            gap: 4,
-                            justifyContent: "center",
-                        }}
+                        sx={resultsBlockSx}
                     >
                         {data!.results.map((movie) => (
-                            <MovieCard key={movie.id} movie={movie}/>
+                            <MovieCardComponent key={movie.id} movie={movie}/>
                         ))}
                     </Box>
                 )}

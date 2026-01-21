@@ -1,7 +1,6 @@
 
 import {ButtonFilterReset} from "@/common/pages/filteredMoviesPage/resetFiltersButton/ButtonFilterReset.tsx";
 
-
 type Props = {
     onReset: () => void;
 };

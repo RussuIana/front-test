@@ -4,7 +4,8 @@ import type {SelectChangeEvent} from "@mui/material/Select";
 import Select from "@mui/material/Select";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import {useTheme} from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import {sortByFormSx} from "@/common/styles";
 
 type SortDirection = "asc" | "desc";
 
@@ -32,36 +33,32 @@ const MOVIE_SORT_OPTIONS: SortOption[] = [
 ];
 
 export const SortByForm = ({value,onChange}:Props) => {
-    const theme = useTheme();
-    const textColor =
-        theme.palette.mode === "light"
-            ? theme.palette.secondary.contrastText
-            : theme.palette.primary.contrastText;
 
     const handleChange = (event: SelectChangeEvent) => {
         onChange(event.target.value as MovieSortOption)
     };
 
     return (
-
-            <FormControl sx={{m: 1, width: 200, }}>
+            <FormControl sx={{m: 1, width: 200,height:50 }}>
                 <Select
+                    variant="outlined"
                     value={value}
                     onChange={handleChange}
+                    sx={sortByFormSx}
                 >
                     {MOVIE_SORT_OPTIONS.map(option => {
                         const val: MovieSortOption = `${option.field}.${option.direction}`;
                         const showArrow = option.field !== "title";
                         return (
                             <MenuItem key={val} value={val}>
-                <span style={{display: "flex", alignItems: "center", gap: 8,color: textColor }}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                     {option.label}
 
                     {showArrow && (option.direction === "asc"
                         ? <ArrowUpwardIcon fontSize="small"/>
                         : <ArrowDownwardIcon fontSize="small"/>
                     )}
-                </span>
+                </Box>
                             </MenuItem>
                         );
                     })}

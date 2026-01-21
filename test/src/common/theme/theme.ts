@@ -22,13 +22,13 @@ export const getTheme = (themeMode: ThemeMode) => {
 
             background: {
                 default: isLight ? "#F9FAFB" : "#0B1120",
-                paper: isLight ? "#FFFFFF" : "#182130",
+                paper: isLight ? "#dfe6ee" : "#182130",
             },
 
             text: {
                 primary: isLight ? "#1F2933" : "#E5E7EB",
                 secondary: isLight ? "#4B5563" : "#9CA3AF",
-                disabled: "#6B7280",
+                disabled: isLight ? "#CAC1C1FF" : "#65B3A08C",
             },
 
             action: {
@@ -36,12 +36,15 @@ export const getTheme = (themeMode: ThemeMode) => {
                     ? "#6691b8"
                     : "#3C8A78",
                 selected: isLight
-                    ? "rgba(56,84,119,0.28)"
-                    : "rgba(43,107,92,0.55)",
+                    ? "#38547747"
+                    : "#65B3A08C",
+                disabled: isLight
+                    ? "#aaa1a1"
+                    : "#65B3A08C",
             },
 
             info: {
-                main: isLight ? "#385477" : "#3C8DBC",
+                main: isLight ? "#91b3d1" : "#2e6054",
             },
 
             success: { main: "#22C55E" },

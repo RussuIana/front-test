@@ -7,17 +7,17 @@ type Props = {
     count?: number;
 };
 
-export const MovieCardSkeleton = ({ count = 20 }: Props) => {
+export const MovieCardSkeleton = ({count = 20}: Props) => {
     return (
         <Box
             sx={{
                 display: "grid",
                 gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-                gap: 2, // 16px
-                mt: 2, // 16px
+                gap: 2,
+                mt: 2,
             }}
         >
-            {Array.from({ length: count }).map((_, index) => (
+            {Array.from({length: count}).map((_, index) => (
                 <Card
                     key={index}
                     sx={{
@@ -25,7 +25,6 @@ export const MovieCardSkeleton = ({ count = 20 }: Props) => {
                         position: "relative",
                     }}
                 >
-                    {/* Poster */}
                     <Skeleton
                         variant="rectangular"
                         width={200}
@@ -34,24 +33,22 @@ export const MovieCardSkeleton = ({ count = 20 }: Props) => {
                     />
 
                     <CardContent>
-                        {/* Title */}
-                        <Skeleton height={24} animation="wave" />
 
-                        {/* Rating chip */}
+                        <Skeleton height={24} animation="wave"/>
+
                         <Skeleton
                             variant="rounded"
                             width={48}
                             height={24}
-                            sx={{ mt: 1 }}
+                            sx={{mt: 1}}
                             animation="wave"
                         />
 
-                        {/* Favorite button */}
                         <Skeleton
                             variant="rounded"
                             width={110}
                             height={32}
-                            sx={{ mt: 1 }}
+                            sx={{mt: 1}}
                             animation="wave"
                         />
                     </CardContent>

@@ -18,29 +18,24 @@ const categories: { title: string; value: FilterCategory }[] = [
 
 export const CategoryMovies = () => {
 
-
     const [searchParams, setSearchParams] = useSearchParams();
-    const [page, setPage] = useState(1);
-    const activeCategory =
-        (searchParams.get("query") as FilterCategory) || "popular";
 
-    // Сбрасываем страницу при смене категории
+    const [page, setPage] = useState(1);
+
+    const activeCategory = (searchParams.get("query") as FilterCategory) || "popular";
     useEffect(() => {
         setPage(1);
     }, [activeCategory]);
 
     const handleCategoryClick = (category: FilterCategory) => {
-        // Меняем query параметр в URL
         setSearchParams({query: category});
     };
 
     const {data} = useGetMoviesQuery({category: activeCategory, page});
 
     return (
-
         <Container>
             <div style={{paddingTop: "40px"}}>
-                {/* Кнопки выбора категории */}
                 <Stack direction="row" spacing={2} mb={3} justifyContent="center" marginBottom="40">
                     {categories.map((cat) => (
                         <CategoryButton
@@ -52,24 +47,16 @@ export const CategoryMovies = () => {
                         </CategoryButton>
                     ))}
                 </Stack>
-
-                {/* Заголовок текущей категории */}
-
                 <TitleSection>
                     {categories.find(c => c.value === activeCategory)?.title} Movies
                 </TitleSection>
-
-                {/* Список фильмов */}
                 <Movies category={activeCategory} page={page} limit={20}/>
-
-
                 <MoviePagination
-                    totalPages={data?.total_pages ?? 1}  // сюда нужно передать реальное количество страниц из API
+                    totalPages={data?.total_pages ?? 1}
                     page={page}
                     setPage={setPage}
                 />
             </div>
-
         </Container>
 
 

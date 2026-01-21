@@ -1,31 +1,19 @@
+import { styled } from "@mui/material/styles";
 
-import { styled, useTheme } from "@mui/material/styles";
+export const TitleSection = styled("h1")(({ theme }) => ({
+    minWidth: "120px",
+    display: "inline-flex",
+    fontWeight: "bold",
+    fontSize: "40px",
+    textTransform: "capitalize",
+    textDecoration: "none",
 
-export const TitleSection = styled("h1")(() => {
-    const theme = useTheme();
-    const isLight = theme.palette.mode === "light";
+    color: theme.palette.text.primary,
 
-    const color = isLight
-        ? theme.palette.secondary.contrastText
-        : theme.palette.primary.contrastText;
+    cursor: "pointer",
+    transition: "all 0.25s ease",
 
-    const hoverColor = isLight
-        ? theme.palette.secondary.dark
-        : theme.palette.primary.dark;
-
-
-    return {
-        minWidth: "120px",
-        display: "inline-flex",
-        fontWeight: "bold",
-        fontSize: "40px",
-        textTransform: "capitalize",
-        textDecoration: "none",
-        borderRadius: "40px",
-        color,
-
-        "&:hover": {
-            color: hoverColor,
-        },
-    };
-});
+    "&:hover": {
+        color: theme.palette.action.hover,
+    },
+}));

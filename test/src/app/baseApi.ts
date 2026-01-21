@@ -7,6 +7,5 @@ export const baseApi = createApi({
   tagTypes: ["Movie"],
    baseQuery:baseQueryWithApiKey,
 
-
   endpoints: () => ({}),
 })

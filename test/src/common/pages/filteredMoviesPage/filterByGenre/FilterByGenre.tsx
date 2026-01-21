@@ -3,7 +3,7 @@ import {useGetGenresQuery} from "@/features/discoverMovies/api/moviesApi.ts";
 import {FilterByGenreButton} from "@/common/pages/filteredMoviesPage/filterByGenre/FilterByGenreButton.tsx";
 
 type Props = {
-    value: number[];                // выбранные жанры (id)
+    value: number[];
     onChange: (value: number[]) => void;
 };
 
