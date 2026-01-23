@@ -16,24 +16,12 @@ export const Path = {
 
 export const Routing = () => (
   <Routes>
-    <Route>
       <Route path={Path.Main} element={<Main />} />
-    </Route>
-    <Route>
       <Route path={Path.CategoryMovies} element={<CategoryMovies />} />
-    </Route>
-    <Route>
       <Route path={Path.FilteredMovies} element={<FilteredMovies />} />
-    </Route>
-    <Route>
       <Route path={Path.Search} element={<Search />} />
-    </Route>
-    <Route>
       <Route path={Path.Favorites} element={<Favorites />} />
-    </Route>
-      <Route>
       <Route path={Path.MovieDetailsPage} element={<MovieDetailsPage />} />
-    </Route>
       <Route path={Path.NotFound} element={<PageNotFound />} />
   </Routes>
 )
