@@ -16,7 +16,7 @@ export default defineConfig({
       "@/": `${path.resolve(__dirname, "src")}/`,
     },
   },
-    build: {
-        outDir: "dist", // стандартная папка для Vercel
-    },
+    // build: {
+    //     outDir: "dist", // стандартная папка для Vercel
+    // },
 })
